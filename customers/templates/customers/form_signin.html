@@ -13,28 +13,26 @@
         <h2>Sign in</h2>
         <form>
             <div class="user-box">
-                <input type="text" name="" required="">
+                {% comment %} <input type="text" name="" required=""> {% endcomment %}
+                {{ form.email }}
                 <label>Email</label>
             </div>
-            <div class="user-box">/
-                <input type="password" name="" required="">
+            <div class="user-box">
+                {% comment %} <input type="password" name="" required=""> {% endcomment %}
+                {{ form.password }}
                 <label>Password</label>
             </div>
-            <a href="#">
+            <button>
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
                 Submit
-            </a>
-            <a href="#" style="margin-left: 56px;">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                Sign up
-            </a>
+            </button>
         </form>
+        <div>
+            <a href="">Quên mật khẩu</a>
+        </div>
     </div>
 </body>
 </html>

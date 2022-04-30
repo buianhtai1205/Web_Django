@@ -11,45 +11,40 @@
 <body>
     <div class="login-box">
         <h2>Sign up</h2>
-        <form>
+        <form action="{% url 'save' %}" method="POST">
+            {% csrf_token %}
             <div class="user-box">
-                <input type="text" name="" required="">
+                {% comment %} <input type="text" name="" required=""> {% endcomment %}
+                {{ form.name }}
                 <label>Name</label>
             </div>
             <div class="user-box">
-                <input type="email" name="" required="">
+                {% comment %} <input type="email" name="" required=""> {% endcomment %}
+                {{ form.email }}
                 <label>Email</label>
             </div>
             <div class="user-box">
-                <input type="password" name="" required="">
+                {% comment %} <input type="password" name="" required=""> {% endcomment %}
+                {{ form.password }}
                 <label>Password</label>
             </div>
             <div class="user-box">
-                <input type="password" name="" required="">
-                <label>Confirm Password</label>
-            </div>
-            <div class="user-box">
-                <input type="text" name="" required="">
+                {% comment %} <input type="text" name="" required=""> {% endcomment %}
+                {{ form.phone }}
                 <label>Phone</label>
             </div>
             <div class="user-box">
-                <input type="text" name="" required="">
+                {% comment %} <input type="text" name="" required=""> {% endcomment %}
+                {{ form.address }}
                 <label>Address</label>
             </div>
-            <a href="#">
+            <button>
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
                 Submit
-            </a>
-            <a href="#" style="margin-left: 56px;">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                Sign in
-            </a>
+            </button>
         </form>
       </div>
 </body>
