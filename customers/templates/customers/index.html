@@ -27,7 +27,6 @@
 
 
     <!-- main css -->
-    {% comment %} <link rel="stylesheet" type="text/css" href="{% static "index.css" %}" /> {% endcomment %}
 
 
     <!-- message here -->
@@ -61,17 +60,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" class="styleheader" href="{% url "index" %}">project</a>
+            <a class="navbar-brand" class="styleheader" href="{% url "customer:index" %}">project</a>
             </div>
             <div class="collapse navbar-collapse" id="mainNavBar">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url "index" %}">Home</a></li>
+                <li><a href="{% url "customer:index" %}">Home</a></li>
 
                 {% if user.is_authenticated %}
-                <li><a href="{% url "logout" %}"><span class="glyphicon glyphicon-log-out"></span> &nbsp; Sign Out</a></li>
+                <li><a href="{% url "customer:logout" %}"><span class="glyphicon glyphicon-log-out"></span> &nbsp; Sign Out</a></li>
                 {% else %}
-                <li><a href="{% url "signup" %}"><span class="glyphicon glyphicon-user"></span> &nbsp; Sign Up</a></li>
-                <li><a href="{% url "signin" %}"><span class="glyphicon glyphicon-log-in"></span> &nbsp; Sign In</a></li>
+                <li><a href="{% url "customer:signup" %}"><span class="glyphicon glyphicon-user"></span> &nbsp; Sign Up</a></li>
+                <li><a href="{% url "customer:signin" %}"><span class="glyphicon glyphicon-log-in"></span> &nbsp; Sign In</a></li>
                 {% endif %}
             </ul>
             </div>
