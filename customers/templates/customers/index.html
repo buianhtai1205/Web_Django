@@ -67,7 +67,7 @@
                 <li><a href="{% url "customer:index" %}">Home</a></li>
 
                 {% if user.is_authenticated %}
-                <li><a href="{% url "customer:logout" %}"><span class="glyphicon glyphicon-log-out"></span> &nbsp; Sign Out</a></li>
+                <li><a href="{% url "logout" %}"><span class="glyphicon glyphicon-log-out"></span> &nbsp; Sign Out</a></li>
                 {% else %}
                 <li><a href="{% url "customer:signup" %}"><span class="glyphicon glyphicon-user"></span> &nbsp; Sign Up</a></li>
                 <li><a href="{% url "customer:signin" %}"><span class="glyphicon glyphicon-log-in"></span> &nbsp; Sign In</a></li>
