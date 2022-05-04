@@ -11,7 +11,7 @@
     <meta name="language" content="English">
     <meta name="author" content="vinayak sharma">
 
-    <title>{{title}}</title>
+    <title>INDEX</title>
 
 
     <!-- bootstrap file -->
@@ -26,69 +26,272 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-    <!-- main css -->
+    <!-- style css -->
+    <link rel="stylesheet" href="{% static 'customer/css/style.css' %}">
+    <!-- Responsive-->
+    <link rel="stylesheet" href="{% static 'customer/css/responsive.css' %}">
+    <!-- fevicon -->
+    <link rel="icon" href="images/fevicon.png" type="image/gif" />
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="{% static 'customer/css/jquery.mCustomScrollbar.min.css' %}">
+    <!-- Tweaks for older IEs-->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
 
-
-    <!-- message here -->
-
-    {% if messages %}
-    {% for message in messages %}
-
-    <script>
-        alert("{{ message }}");
-    </script>
-
-    {% endfor %}
-    {% endif %}
-
-    <!--_______________________________________________-->
 
 </head>
 
-<body class="container-fluid">
+<body class="container-fluid main-layout">
+    <div class="wrapper">
 
+        <!-- end loader -->
+        <div class="sidebar">
+            <!-- Sidebar  -->
+            <nav id="sidebar">
 
-    <header class="row">
+                <div id="dismiss">
+                    <i class="fa fa-arrow-left"></i>
+                </div>
 
-        <!-- navbar-->
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-            <button class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" class="styleheader" href="{% url "customer:index" %}">project</a>
-            </div>
-            <div class="collapse navbar-collapse" id="mainNavBar">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url "customer:index" %}">Home</a></li>
+                <ul class="list-unstyled components">
 
-                {% if user.is_authenticated %}
-                <li><a href="{% url "customer:logout" %}"><span class="glyphicon glyphicon-log-out"></span> &nbsp; Sign Out</a></li>
-                {% else %}
-                <li><a href="{% url "customer:signup" %}"><span class="glyphicon glyphicon-user"></span> &nbsp; Sign Up</a></li>
-                <li><a href="{% url "customer:signin" %}"><span class="glyphicon glyphicon-log-in"></span> &nbsp; Sign In</a></li>
-                {% endif %}
-            </ul>
+                    <li class="active">
+                        <a href="index.html">Trang chủ</a>
+                    </li>
+                    <li>
+                        <a href="#brand">Nhãn hiệu</a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+
+        <div id="content">
+            <!-- header -->
+            <header>
+                <!-- header inner -->
+                <div class="head_top">
+                    <div class="header">
+
+                        <div class="container-fluid">
+
+                            <div class="row">
+                                <div class="col-lg-3 logo_section">
+                                    <div class="full">
+                                        <div class="center-desk">
+                                            <div class="logo">
+                                                <a href="#" class="navbar-brand">3TS Mobile</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9">
+                                    <div class="right_header_info">
+                                        <ul>
+                                            <li class="menu_iconb">
+                                                <a href="#">Đăng nhập <img style="margin-right: 15px;" src="static/customer/icon/5.png" alt="#" /> </a>
+                                            </li>
+                                            <li class="menu_iconb">
+                                                <a href="#">Đăng kí<img style="margin-left: 15px;" src="static/customer/icon/6.png" alt="#" /></a>
+                                            </li>
+                                            <li class="tytyu">
+                                                <a href="#">Giỏ hàng <img style="margin-right: 15px;" src="static/customer/icon/2.png" alt="#" /></a>
+                                            </li>
+                                            <li class="menu_iconb">
+                                                <a href="#">Tìm kiếm<img style="margin-right: 15px;" src="static/customer/icon/3.png" alt="#" /></a>
+                                            </li>
+
+                                            <li>
+                                                <button type="button" id="sidebarCollapse">
+                                                    <img src="static/customer/icon/menu_icon.png" alt="#" />
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- end header inner -->
+
+                    <!-- end header -->
+                    
+
+                </div>
+            </header>
+            <!-- Categories -->
+            <div class="Categories">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="title">
+                                <h2>Loại </h2>
+                                <ul class="categiri">
+                                    <li class="active"><a href="#">SamSung</a></li>
+                                    <li><a href="#">Iphone</a></li>
+                                    <li><a href="#shoes">ViVo</a></li>
+                                    <li><a href="#">Nokia</a></li>
+                                    <li><a href="#jewellery">Oppo</a></li>
+                                    <li><a href="#">Redmi</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Iphone -->
+                    <div id="brand"  class="brand-bg">
+                        <h3>Iphone</h3>
+                        <div class="row">
+                             <!-- Render Iphone -->
+                            {% if ds_product_iphone %}
+                                {% for item in ds_product_iphone %}
+                                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 margintop">
+                                        <div class="brand-box">
+                                            <a href="">
+                                                <i><img src="media/{{ item.image }}" alt="img"></i>
+                                                <h4><span class="nolmal">{{ item.name }}</span></h4>
+                                                <h4><span class="nolmal">{{ item.price }}</span>VND</h4>
+                                            </a>
+                                            
+                                        </div>
+                                        <a class="buynow" href="#">Mua ngay</a>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <!-- End Render -->
+                            
+                        </div>
+                    </div>
+                    <!-- end news brand -->
+
+                    <!-- news shoes -->
+                    <div id="shoes" class="shoes-bg">
+                        <h3>Sam Sung</h3>
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 margintop">
+                                <div class="shoes-box">
+                            
+                                    <i><img src="static/customer/images/products/1samsung-galaxy-s22-ultra-1-1.jpg"/>
+                                </i>
+                                    <h4><span class="nolmal">30.990.000 VNĐ</span></h4>
+
+                                </div>
+                                <a class="buynow" href="#">Mua ngay</a>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 margintop">
+                                <div class="shoes-box">
+                                    <i><img src="static/customer/images/products/2samsung-galaxy-a03-1-4.jpg"/></i>
+                                    <h4><span class="nolmal">3.490.000 VNĐ</span></h4>
+                                </div>
+                                <a class="buynow" href="#">Mua ngay</a>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                                <div class="shoes-box">
+                                    <i><img src="static/customer/images/products/3samsung-galaxy-a52s-5g-1-5.jpg"/></i>
+                                    <h4 $<span class="nolmal">9.489.000 VNĐ</span></h4>
+                                </div>
+                                <a class="buynow" href="#">Mua ngay</a>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                                <div class="shoes-box">
+                                    <i><img src="static/customer/images/products/4samsung-galaxy-z-fold-3-1-3.jpg"/></i>
+                                    <h4>\ <span class="nolmal">37.989.000 VNĐ</span></h4>
+                                </div>
+                                <a class="buynow" href="#">Mua ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-        </nav>
-    </header>
-    <br/>
-    <br>
-    <br>
-    <div class="row">
-        {% block start %}
-        {% if user.is_authenticated %}
-        <center><h1>welcome back {{user.username}}!</h1></center>
-        {% else %}
-        <center><h1>log in, plz . . .</h1></center>
-        {% endif %}
-        {% endblock %}
+        <!-- end news shoes -->
+ 
+    <!-- end Categories -->
+    
+    <section>
+        <!--  save -->
+    </section>
+
+
     </div>
+
+    <div class="overlay"></div>
+
+    <!-- Javascript files-->
+    <script src="{% static 'customer/js/jquery.min.js' %}"></script>
+    <script src="{% static 'customer/js/popper.min.js' %}"></script>
+    <script src="{% static 'customer/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'customer/js/jquery-3.0.0.min.js' %}"></script>
+
+    <!-- sidebar -->
+    <script src="{% static 'customer/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+    <script src="{% static 'customer/js/custom.js' %}"></script>
+    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#sidebar").mCustomScrollbar({
+                theme: "minimal"
+            });
+
+            $('#dismiss, .overlay').on('click', function() {
+                $('#sidebar').removeClass('active');
+                $('.overlay').removeClass('active');
+            });
+
+            $('#sidebarCollapse').on('click', function() {
+                $('#sidebar').addClass('active');
+                $('.overlay').addClass('active');
+                $('.collapse.in').toggleClass('in');
+                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+
+            $(".zoom").hover(function() {
+
+                $(this).addClass('transition');
+            }, function() {
+
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
+    <script>
+        // This example adds a marker to indicate the position of Bondi Beach in Sydney,
+        // Australia.
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 11,
+                center: {
+                    lat: 40.645037,
+                    lng: -73.880224
+                },
+            });
+
+            var image = 'images/maps-and-flags.png';
+            var beachMarker = new google.maps.Marker({
+                position: {
+                    lat: 40.645037,
+                    lng: -73.880224
+                },
+                map: map,
+                icon: image
+            });
+        }
+    </script>
+    <!-- google map js -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8eaHt9Dh5H57Zh0xVTqxVdBFCvFMqFjQ&callback=initMap"></script>
+    <!-- end google map js -->
+       
 </body>
 
 </html>

@@ -3,11 +3,16 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponse
 from .models import Customer
+from products.models import Product
 from .forms import CreateCustomersForm, SigninCustomersForm
+from django.http import JsonResponse
+from django.core.serializers import serialize
 
 
 def index(request):
-    return render(request, 'customers/index.html', {'title':'index'})
+    products_iphone = Product.objects.filter(manufacturer_id = 15)
+    content = {'ds_product_iphone': products_iphone}
+    return render(request, 'customers/index.html', content)
 
 def signin(request):
     a = SigninCustomersForm()
