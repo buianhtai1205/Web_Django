@@ -88,13 +88,23 @@
                                 <div class="col-lg-9">
                                     <div class="right_header_info">
                                         <ul class="navbar-nav">
+                                            {% if username %}
                                             <li class="nav-item">
-                                                <a class="nav-link" href="{% url "customer:signin" %}" >Đăng Nhập <img style="margin-right: 15px;" src="static/customer/icon/6.png" alt="#" /></a>                        
+                                                <a class="nav-link" href="" >{{ username }} <img style="margin-right: 15px;" src="static/customer/icon/6.png" alt="#" /></a>                        
                                             </li>
 
                                             <li class="nav-item">
-                                                <a class="nav-link" href="{% url "customer:signup" %}" >Đăng Kí <img style="margin-right: 15px;" src="static/customer/icon/5.png" alt="#" /></a>                        
+                                                <a class="nav-link" href="{% url "customers:signout" %}" >Đăng Xuất <img style="margin-right: 15px;" src="static/customer/icon/5.png" alt="#" /></a>                        
                                             </li>
+                                            {% else %}
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{% url "customers:signin" %}" >Đăng Nhập <img style="margin-right: 15px;" src="static/customer/icon/6.png" alt="#" /></a>                        
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{% url "customers:signup" %}" >Đăng Kí <img style="margin-right: 15px;" src="static/customer/icon/5.png" alt="#" /></a>                        
+                                            </li>
+                                            {% endif %}
                                               
                                             <li class="tytyu">
                                                 <a href="#">Giỏ hàng <img style="margin-right: 15px;" src="static/customer/icon/2.png" alt="#" /></a>
