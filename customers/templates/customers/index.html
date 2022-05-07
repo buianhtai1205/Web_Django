@@ -151,52 +151,69 @@
                         </div>
                     </div>
 
-                    <!-- Iphone -->
-                    <div id="brand"  class="brand-bg">
-                        <h3>Iphone</h3>
-                        <div class="row">
-                             <!-- Render Iphone -->
-                            {% if ds_product_iphone %}
-                                {% for item in ds_product_iphone %}
-                                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 margintop">
-                                        <div class="brand-box">
-                                            <a href="">
-                                                <i><img src="media/{{ item.image }}" alt="img"></i>
-                                                <h4><span class="nolmal">{{ item.name }}</span></h4>
-                                                <h4><span class="nolmal">{{ item.price }} VNĐ</span></h4>
-                                            </a>
-                                            
-                                        </div>
-                                        <a class="buynow" href="#">Mua ngay</a>
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                            <!-- End Render -->
-                            
-                        </div>
-                    </div>
-                    <!-- end news brand -->
+                    <div class="row">
+                        <!-- List product -->
+                       {% if product_4firt %}
+                           {% for item in product_4firt %}
+                               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 margintop">
+                                   <div class="brand-box">
+                                       <a href="">
+                                           <i><img src="media/{{ item.image }}" alt="img"></i>
+                                           <h4><span class="nolmal">{{ item.name }}</span></h4>
+                                           <h4><span class="nolmal">{{ item.price }}</span>VND</h4>
+                                       </a>
+                                       
+                                   </div>
+                                   <a class="buynow" href="#">Mua ngay</a>
+                               </div>
+                           {% endfor %}
+                       {% endif %}
+                       <!-- End Render -->
+                       
+                   
+                    {% for contact in page_obj %}
+                        {{ contact.full_name|upper }}<br>
+                    
+                    {% endfor %}
 
-                    <!-- news shoes -->
-                    <div id="shoes" class="shoes-bg">
-                        <h3>Sam Sung</h3>
-                        <div class="row">
-                            <!-- render samsung -->
-                            {% if ds_product_samsung %}
-                                {% for item in ds_product_samsung %}
-                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 margintop">
-                                <div class="shoes-box">
-                                    <a href="">
-                                        <i><img src="media/{{ item.image }}" alt="img"></i>
-                                        <h4><span class="nolmal">{{ item.name }}</span></h4>
-                                        <h4><span class="nolmal">{{ item.price }} VNĐ</span></h4>
-                                    </a>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1">&laquo; Trang 1</a>
+                            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                            <div id="brand"  class="brand-bg">
                             
+                                <div class="row">
+                                     <!-- List product -->
+                                    {% if page_obj %}
+                                        {% for item in page_obj %}
+                                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 margintop">
+                                                <div class="brand-box">
+                                                    <a href="">
+                                                        <i><img src="media/{{ item.image }}" alt="img"></i>
+                                                        <h4><span class="nolmal">{{ item.name }}</span></h4>
+                                                        <h4><span class="nolmal">{{ item.price }}</span>VND</h4>
+                                                    </a>
+                                                    
+                                                </div>
+                                                <a class="buynow" href="#">Mua ngay</a>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <!-- End Render -->
+                                    
                                 </div>
-                                <a class="buynow" href="#">Mua ngay</a>
                             </div>
-                                {% endfor %}
-                            {% endif %}
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        </span>
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">Trang tiếp</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}">Trang sau &raquo;</a>
+                        {% endif %}
                         </div>
                     </div>
                 </div>
