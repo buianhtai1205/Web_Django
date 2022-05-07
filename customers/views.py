@@ -8,6 +8,7 @@ from .forms import CreateCustomersForm, SigninCustomersForm
 from django.urls import reverse
 from django.http import JsonResponse
 from django.core.serializers import serialize
+from django.core.paginator import Paginator
 
 
 def index(request):
@@ -16,9 +17,14 @@ def index(request):
         if (request.session['username']):
             username = request.session['username']
             content['username'] = username
-    products_iphone = Product.objects.filter(manufacturer_id = 15)
-    content['ds_product_iphone'] = products_iphone
-    return render(request, 'customers/index.html', content)
+    products_list = Product.objects.all()
+    product_4firt = Product.objects.all()[:4]
+    paginator = Paginator(products_list, 8) 
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    content['page_obj'] = page_obj
+    content['product_4firt'] = product_4firt
+    return render(request, 'customers/index.html',content)
 
 def signin(request):
     a = SigninCustomersForm()
