@@ -13,7 +13,7 @@ from django.core.paginator import Paginator
 
 def index(request):
     content = {}
-    if request.session._session:
+    if 'username' in request.session:
         if (request.session['username']):
             username = request.session['username']
             content['username'] = username
