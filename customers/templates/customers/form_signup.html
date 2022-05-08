@@ -11,7 +11,7 @@
 <body>
     <div class="login-box">
         <h2>Sign up</h2>
-        <form action="{% url 'customer:save' %}" method="POST">
+        <form action="{% url 'customers:save' %}" method="POST">
             {% csrf_token %}
             <div class="user-box">
                 {% comment %} <input type="text" name="" required=""> {% endcomment %}
