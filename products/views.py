@@ -1,14 +1,15 @@
 from django.shortcuts import render
 from django.contrib import admin
-<<<<<<< HEAD
 
-from .models import *
+from products.models import Product 
+from manufacturers.models import Manufacturer 
 from django.http import HttpResponse
 from collections import OrderedDict
 
 from .fusioncharts import FusionCharts
 
-
+products = Product.objects.all()
+manufacturers = Manufacturer.objects.all()
 
 def myFirstChart(request):
     # Customer
@@ -46,109 +47,39 @@ def myFirstChart(request):
     return render(request, 'index.html', {'output': colchart.render(), 'output2': plantchart.render()})
 
 
+
 # def myFirstChart(request):
-#   products = Product.objects.all()
-#   manufacturers = Manufacturer.objects.all()
 # # Chart data is passed to the `dataSource` parameter, like a dictionary in the form of key-value pairs.
-#   dataSource_product = {}
+#   dataSource = OrderedDict()
 
-#   chartConfig_column_chart = {}
-#   chartConfig_column_chart["caption"] = "Chart Ecommerce"
-#   chartConfig_column_chart["subCaption"] = ""
-#   chartConfig_column_chart["xAxisName"] = "Name"
-#   chartConfig_column_chart["yAxisName"] = "Price"
-#   chartConfig_column_chart["numberSuffix"] = "K"
-#   chartConfig_column_chart["theme"] = "fusion"
+# # The `chartConfig` dict contains key-value pairs of data for chart attribute
+#   chartConfig = OrderedDict()
+#   chartConfig["caption"] = "Chart Ecommerce"
+#   chartConfig["subCaption"] = ""
+#   chartConfig["xAxisName"] = "Name"
+#   chartConfig["yAxisName"] = "Price"
+#   chartConfig["numberSuffix"] = " VNĐ"
+#   chartConfig["theme"] = "fusion"
 
-#   dataSource_product["chart"] = chartConfig_column_chart
-#   dataSource_product["data"] = []
-#   for manufacturer in manufacturers:
-#      dataSource_product["data"].append({"label": manufacturer.name})  
+#   dataSource["chart"] = chartConfig
+#   dataSource["data"] = []
+
+#  # The data for the chart should be in an array wherein each element of the array  is a JSON object having the `label` and `value` as keys.
+# # Insert the data into the `dataSource['data']` list.
+#   # for manufacturer in manufacturers:
+#   #    dataSource["data"].append({"label": manufacturer.name})  
+
 #   for product in products:
-#      dataSource_product["data"].append({"value": product.price})  
-# #  circle chart
-#   dataSource_manufacture= {}
-#   chartConfig_circle_chart = {}
-#   chartConfig_circle_chart['caption'] = "Recommended Portfolio Split",
-#   chartConfig_circle_chart['subCaption'] = "For a net-worth of $1M",
-#   chartConfig_circle_chart['showValues'] = "1",
-#   chartConfig_circle_chart['showPercentInTooltip'] = "0",
-#   chartConfig_circle_chart['numberPrefix'] = "$",
-#   chartConfig_circle_chart['enableMultiSlicing'] = "1",
-#   chartConfig_circle_chart['theme'] = "fusion",
+#     myLabel = product.name.split(" ")[2] + " " + product.name.split(" ")[3]
+#     dataSource["data"].append({"label": myLabel})  
+#     dataSource["data"].append({"value": product.price})
   
-#   dataSource_manufacture["chart"] = chartConfig_circle_chart
-#   dataSource_manufacture["data"] = []
-
-#   for manufacturer in manufacturers:
-#      dataSource_manufacture["data"].append({"label": manufacturer.name})  
-#   for product in products:
-#      dataSource_manufacture["data"].append({"value": product.price})  
-
-#   column2D = FusionCharts("column2D", "myFirstChart", "800", "600", "myFirstchart-container", "json", dataSource_product)
-#   pie3D = FusionCharts("pie3D", "myFirstChart", "100%", "400", "myFirstchart-container2", "json", dataSource_manufacture)
-#   return render(request, 'index.html', {
-#     'output': column2D.render(),
-#     'output2': pie3D.render(),
+  
+#   dataSource["chart"]["exportEnabled"] = 1
+# # Create an object for the column 2D chart using the FusionCharts class constructor
+# # The chart data is passed to the `dataSource` parameter.
+#   column2D = FusionCharts("column2D", "myFirstChart", "1500", "600", "myFirstchart-container", "json", dataSource)
+#   return render(request, 'dartboard1.html', {
+#     'output1': column2D.render(), 
 # })
 
-# # @admin.login()
-# def checkAdmin(request):
-#     if request.method == 'GET':
-#         login_data = request.POST.dict()
-#         username = login_data['username']
-#         password = login_data['password']
-#         num_rows = admin.ModelAdmin.objects.filter(username=username, password=password).count()
-#         if num_rows > 0:
-#             return render(request, 'products/index.html', {'title':'index'})
-#         else:
-#             return render("Không có quyền truy cập")
-#     return HttpResponse("Sai method")
-=======
-
-from products.models import Product 
-from manufacturers.models import Manufacturer 
-from django.http import HttpResponse
-from collections import OrderedDict
-
-from .fusioncharts import FusionCharts
-
-products = Product.objects.all()
-manufacturers = Manufacturer.objects.all()
-
-def myFirstChart(request):
-# Chart data is passed to the `dataSource` parameter, like a dictionary in the form of key-value pairs.
-  dataSource = OrderedDict()
-
-# The `chartConfig` dict contains key-value pairs of data for chart attribute
-  chartConfig = OrderedDict()
-  chartConfig["caption"] = "Chart Ecommerce"
-  chartConfig["subCaption"] = ""
-  chartConfig["xAxisName"] = "Name"
-  chartConfig["yAxisName"] = "Price"
-  chartConfig["numberSuffix"] = " VNĐ"
-  chartConfig["theme"] = "fusion"
-
-  dataSource["chart"] = chartConfig
-  dataSource["data"] = []
-
- # The data for the chart should be in an array wherein each element of the array  is a JSON object having the `label` and `value` as keys.
-# Insert the data into the `dataSource['data']` list.
-  # for manufacturer in manufacturers:
-  #    dataSource["data"].append({"label": manufacturer.name})  
-
-  for product in products:
-    myLabel = product.name.split(" ")[2] + " " + product.name.split(" ")[3]
-    dataSource["data"].append({"label": myLabel})  
-    dataSource["data"].append({"value": product.price})
-  
-  
-  dataSource["chart"]["exportEnabled"] = 1
-# Create an object for the column 2D chart using the FusionCharts class constructor
-# The chart data is passed to the `dataSource` parameter.
-  column2D = FusionCharts("column2D", "myFirstChart", "1500", "600", "myFirstchart-container", "json", dataSource)
-  return render(request, 'dartboard1.html', {
-    'output1': column2D.render(), 
-})
-
->>>>>>> 7fed08596d78c8ad0ea0d8f8efe39061a3713513
