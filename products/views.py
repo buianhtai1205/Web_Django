@@ -29,17 +29,21 @@ def myFirstChart(request):
 
  # The data for the chart should be in an array wherein each element of the array  is a JSON object having the `label` and `value` as keys.
 # Insert the data into the `dataSource['data']` list.
-  for manufacturer in manufacturers:
-     dataSource["data"].append({"label": manufacturer.name})  
+  # for manufacturer in manufacturers:
+  #    dataSource["data"].append({"label": manufacturer.name})  
 
   for product in products:
-     dataSource["data"].append({"value": product.price})
- 
+    myLabel = product.name.split(" ")[2] + " " + product.name.split(" ")[3]
+    dataSource["data"].append({"label": myLabel})  
+    dataSource["data"].append({"value": product.price})
+  
+  
+  dataSource["chart"]["exportEnabled"] = 1
 # Create an object for the column 2D chart using the FusionCharts class constructor
 # The chart data is passed to the `dataSource` parameter.
-  column2D = FusionCharts("column2D", "myFirstChart", "800", "600", "myFirstchart-container", "json", dataSource)
-  return render(request, 'index.html', {
-    'output': column2D.render()
+  column2D = FusionCharts("column2D", "myFirstChart", "1500", "600", "myFirstchart-container", "json", dataSource)
+  return render(request, 'dartboard1.html', {
+    'output1': column2D.render(), 
 })
 
 # # @admin.login()
