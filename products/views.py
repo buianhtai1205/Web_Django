@@ -1,90 +1,47 @@
 from django.shortcuts import render
-from django.contrib import admin
 
 from products.models import Product 
 from manufacturers.models import Manufacturer 
-from django.http import HttpResponse
-from collections import OrderedDict
+from django.db.models import Count
 
 from .fusioncharts import FusionCharts
 
 
 def myFirstChart(request):
-    # Customer
-    dataSource = {}
-    dataSource['chart'] = {
-        "caption": "Product Price Statistics",
-        "xAxisName": "Price",
-        "yAxisName": "Name",
-        "numberSuffix": " VNĐ",
-        "exportEnabled": "1", 
-        "theme": "fusion",
-        }
-    dataSource['data'] = []
+  plantdataSource = {}
+  plantdataSource['chart'] = {
+      "caption": "Product Count Statistics",
+      "numberSuffix": " SP",
+      "exportEnabled": "1",
+      "theme": "fusion"
+  }
+  plantdataSource['data'] = []
+  for item in Manufacturer.objects.raw('SELECT manufacturers_manufacturer.id, manufacturers_manufacturer.name, COUNT(manufacturers_manufacturer.name) AS num_products FROM manufacturers_manufacturer JOIN products_product ON manufacturers_manufacturer.id = products_product.manufacturer_id_id GROUP BY manufacturers_manufacturer.id, manufacturers_manufacturer.name'):
+    data = {}
+    data['label'] = item.name
+    data['value'] = item.num_products
+    plantdataSource['data'].append(data)
+  plantchart = FusionCharts("pie3D", "myFirstChart" , "1500", "700", "myFirstchart-container", "json", plantdataSource)
+  return render(request, 'dartboard1.html', {'output': plantchart.render()})
 
-    for product in Product.objects.all():
-      myLabel = product.name.split(" ")[2] + " " + product.name.split(" ")[3]
-      dataSource["data"].append({"label": myLabel})  
-      dataSource["data"].append({"value": product.price})
 
-    plantdataSource = {}
-    plantdataSource['chart'] = {
-        "caption": "Final Sale Price by Plant",
-        "showValues": "0",
-        "xAxisName": "Name",
-        "yAxisName": "Price",
-        "numberSuffix": " VNĐ",
-        "theme": "fusion"
+def mySecondChart(request):
+  dataSource = {}
+  dataSource['chart'] = {
+    "caption": "Product Price Statistics",
+    "xAxisName": "Name",
+    "yAxisName": "Price",
+    "numberSuffix": " VNĐ",
+    "exportEnabled": "1", 
+    "theme": "fusion",
     }
-    plantdataSource['data'] = []
+  dataSource['data'] = []
 
-    for key in Manufacturer.objects.all():
-      data = {}
-      data['label'] = key.name
-      data['value'] = key.phone
-      plantdataSource['data'].append(data)
+  for product in Product.objects.all():
+    myLabel = product.name.split(" ")[2] + " " + product.name.split(" ")[3]
+    dataSource["data"].append({"label": myLabel})  
+    dataSource["data"].append({"value": product.price})
 
-    dataSource["chart"]["exportEnabled"] = 1
-    plantdataSource["chart"]["exportEnabled"] = 1
-    colchart = FusionCharts("column2D", "ex1", "1500", "700", "chart-1", "json", dataSource)
-    plantchart = FusionCharts("pie3D", "ex2" , "100%", "600", "chart-2", "json", plantdataSource)
-
-    return render(request, 'index.html', {'output': colchart.render(), 'output2': plantchart.render()})
-
-
-
-# def myFirstChart(request):
-# # Chart data is passed to the `dataSource` parameter, like a dictionary in the form of key-value pairs.
-#   dataSource = OrderedDict()
-
-# # The `chartConfig` dict contains key-value pairs of data for chart attribute
-#   chartConfig = OrderedDict()
-#   chartConfig["caption"] = "Chart Ecommerce"
-#   chartConfig["subCaption"] = ""
-#   chartConfig["xAxisName"] = "Name"
-#   chartConfig["yAxisName"] = "Price"
-#   chartConfig["numberSuffix"] = " VNĐ"
-#   chartConfig["theme"] = "fusion"
-
-#   dataSource["chart"] = chartConfig
-#   dataSource["data"] = []
-
-#  # The data for the chart should be in an array wherein each element of the array  is a JSON object having the `label` and `value` as keys.
-# # Insert the data into the `dataSource['data']` list.
-#   # for manufacturer in manufacturers:
-#   #    dataSource["data"].append({"label": manufacturer.name})  
-
-#   for product in products:
-#     myLabel = product.name.split(" ")[2] + " " + product.name.split(" ")[3]
-#     dataSource["data"].append({"label": myLabel})  
-#     dataSource["data"].append({"value": product.price})
-  
-  
-#   dataSource["chart"]["exportEnabled"] = 1
-# # Create an object for the column 2D chart using the FusionCharts class constructor
-# # The chart data is passed to the `dataSource` parameter.
-#   column2D = FusionCharts("column2D", "myFirstChart", "1500", "600", "myFirstchart-container", "json", dataSource)
-#   return render(request, 'dartboard1.html', {
-#     'output1': column2D.render(), 
-# })
+  column2D = FusionCharts("column2D", "mySecondChart", "1500", "700", "myFirstchart-container", "json", dataSource)
+  return render(request, 'dartboard2.html', { 'output': column2D.render(), })
 
