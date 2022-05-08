@@ -15,9 +15,12 @@ def myFirstChart(request):
     # Customer
     dataSource = {}
     dataSource['chart'] = {
-        "caption": "Final Sale Price by Customer",
-        "showValues": "0",
-        "theme": "fusion"
+        "caption": "Product Price Statistics",
+        "xAxisName": "Price",
+        "yAxisName": "Name",
+        "numberSuffix": " VNĐ",
+        "exportEnabled": "1", 
+        "theme": "fusion",
         }
     dataSource['data'] = []
 
