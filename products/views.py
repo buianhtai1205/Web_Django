@@ -8,8 +8,6 @@ from collections import OrderedDict
 
 from .fusioncharts import FusionCharts
 
-products = Product.objects.all()
-manufacturers = Manufacturer.objects.all()
 
 def myFirstChart(request):
     # Customer
@@ -24,16 +22,18 @@ def myFirstChart(request):
         }
     dataSource['data'] = []
 
-    for key in Product.objects.all():
-      data = {}
-      data['label'] = key.name
-      data['value'] = key.price
-      dataSource['data'].append(data)
+    for product in Product.objects.all():
+      myLabel = product.name.split(" ")[2] + " " + product.name.split(" ")[3]
+      dataSource["data"].append({"label": myLabel})  
+      dataSource["data"].append({"value": product.price})
 
     plantdataSource = {}
     plantdataSource['chart'] = {
         "caption": "Final Sale Price by Plant",
         "showValues": "0",
+        "xAxisName": "Name",
+        "yAxisName": "Price",
+        "numberSuffix": " VNĐ",
         "theme": "fusion"
     }
     plantdataSource['data'] = []
@@ -44,8 +44,10 @@ def myFirstChart(request):
       data['value'] = key.phone
       plantdataSource['data'].append(data)
 
-    colchart = FusionCharts("column2D", "ex1", "2000", "400", "chart-1", "json", dataSource)
-    plantchart = FusionCharts("pie3D", "ex2" , "100%", "400", "chart-2", "json", plantdataSource)
+    dataSource["chart"]["exportEnabled"] = 1
+    plantdataSource["chart"]["exportEnabled"] = 1
+    colchart = FusionCharts("column2D", "ex1", "1500", "700", "chart-1", "json", dataSource)
+    plantchart = FusionCharts("pie3D", "ex2" , "100%", "600", "chart-2", "json", plantdataSource)
 
     return render(request, 'index.html', {'output': colchart.render(), 'output2': plantchart.render()})
 
