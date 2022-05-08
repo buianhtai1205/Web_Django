@@ -21,7 +21,7 @@ def myFirstChart(request):
   chartConfig["subCaption"] = ""
   chartConfig["xAxisName"] = "Name"
   chartConfig["yAxisName"] = "Price"
-  chartConfig["numberSuffix"] = "K"
+  chartConfig["numberSuffix"] = " VNĐ"
   chartConfig["theme"] = "fusion"
 
   dataSource["chart"] = chartConfig
@@ -46,15 +46,3 @@ def myFirstChart(request):
     'output1': column2D.render(), 
 })
 
-# # @admin.login()
-# def checkAdmin(request):
-#     if request.method == 'GET':
-#         login_data = request.POST.dict()
-#         username = login_data['username']
-#         password = login_data['password']
-#         num_rows = admin.ModelAdmin.objects.filter(username=username, password=password).count()
-#         if num_rows > 0:
-#             return render(request, 'products/index.html', {'title':'index'})
-#         else:
-#             return render("Không có quyền truy cập")
-#     return HttpResponse("Sai method")

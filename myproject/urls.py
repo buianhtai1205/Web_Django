@@ -22,7 +22,7 @@ from django.contrib.auth import views as auth
 
 urlpatterns = [
     path('', include('customers.urls')),
-    path('admin/chart', include('products.urls')),
+    path('admin/chart/', include('products.urls')),
     path('logout/', auth.LogoutView.as_view(template_name ='user/index.html'), name ='logout'),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
