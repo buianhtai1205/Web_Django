@@ -56,10 +56,19 @@
                 <ul class="list-unstyled components">
 
                     <li class="active">
-                        <a href="index.html">Trang chủ</a>
+                        <a  class="nav-link" href="/" >Trang chủ</a>
                     </li>
-                    <li>
-                        <a href="#brand">Nhãn hiệu</a>
+                    
+                    <li class="active">
+                        <a  href="/">Nhãn hiệu</a>
+                        {% if manufacturer_list %}
+                            {% for item in manufacturer_list %}
+                                <li>
+                                    <a class="list-group-item list-group-item-action"><img src="media/{{ item.image }}" alt="img"></a>
+                                </li>
+                                            
+                            {% endfor %}
+                        {% endif %}
                     </li>
                 </ul>
 
