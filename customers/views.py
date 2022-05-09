@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Customer
 from products.models import Product
+from manufacturers.models import Manufacturer
 from .forms import CreateCustomersForm, SigninCustomersForm
 from django.urls import reverse
 from django.http import JsonResponse
@@ -13,17 +14,20 @@ from django.core import serializers
 
 def index(request):
     content = {}
-    if 'username' in request.session:
+    if request.session._session:
         if (request.session['username']):
             username = request.session['username']
             content['username'] = username
-    products_list = Product.objects.all()
-    product_4firt = Product.objects.all()[:4]
-    paginator = Paginator(products_list, 8) 
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    content['page_obj'] = page_obj
-    content['product_4firt'] = product_4firt
+    manufacturer_list = Manufacturer.objects.all()
+    products_list = None
+    manufacturer_id = request.GET.get('manufacturers')
+    if manufacturer_id:
+        products_list = Product.objects.filter(manufacturer_id = manufacturer_id)
+    else:
+        products_list = Product.objects.all()[:12]
+    
+    content['products_list'] = products_list
+    content['manufacturer_list'] = manufacturer_list
     return render(request, 'customers/index.html',content)
 
 def signin(request):
