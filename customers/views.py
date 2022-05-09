@@ -25,6 +25,9 @@ def index(request):
         products_list = Product.objects.filter(manufacturer_id = manufacturer_id)
     else:
         products_list = Product.objects.all()[:12]
+
+    for product in products_list:
+        product.price = '{:20,d}'.format(int(product.price))
     
     content['products_list'] = products_list
     content['manufacturer_list'] = manufacturer_list
