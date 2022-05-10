@@ -10,4 +10,5 @@ urlpatterns = [
     path('signout/', views.signout, name='signout'),
     path('save/', views.saveCustomer, name='save'),
     path('check/', views.checkCustomer, name='check'),
+    path('<str:id>',views.product_details, name='product_detail')
 ]
