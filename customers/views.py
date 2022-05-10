@@ -72,6 +72,14 @@ def checkCustomer(request):
             content = {'messages': messages}
             return redirect('customers:signin')
     return HttpResponse("Sai method")
+def product_details(request, id):
+    content = {}
+    manufacturer_list = Manufacturer.objects.all()
+    products_list  = Product.objects.filter(id = id).first()
+    
+    content['products_list'] = products_list
+    content['manufacturer_list'] = manufacturer_list
+    return render(request, 'customers/product_details.html',content)
 
 
             
