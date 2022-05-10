@@ -10,8 +10,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="language" content="English">
     <meta name="author" content="vinayak sharma">
-
-    <title>INDEX</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Product Card/Page</title>
 
 
     <!-- bootstrap file -->
@@ -35,10 +35,9 @@
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="{% static 'customer/css/jquery.mCustomScrollbar.min.css' %}">
     <!-- Tweaks for older IEs-->
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-
-
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 
 <body class="container-fluid main-layout">
@@ -64,7 +63,7 @@
                         {% if manufacturer_list %}
                             {% for item in manufacturer_list %}
                                 <li>
-                                    <a class="list-group-item list-group-item-action"><img src="media/{{ item.image }}" alt="img"></a>
+                                    <a class="list-group-item list-group-item-action"><img src="/media/{{ item.image }}" alt="img"></a>
                                 </li>
                                             
                             {% endfor %}
@@ -99,32 +98,32 @@
                                         <ul class="navbar-nav">
                                             {% if username %}
                                             <li class="nav-item">
-                                                <a class="nav-link" href="" >{{ username }} <img style="margin-right: 15px;" src="static/customer/icon/6.png" alt="#" /></a>                        
+                                                <a class="nav-link" href="" >{{ username }} <img style="margin-right: 15px;" src="/static/customer/icon/6.png" alt="#" /></a>                        
                                             </li>
 
                                             <li class="nav-item">
-                                                <a class="nav-link" href="{% url "customers:signout" %}" >Đăng Xuất <img style="margin-right: 15px;" src="static/customer/icon/5.png" alt="#" /></a>                        
+                                                <a class="nav-link" href="{% url "customers:signout" %}" >Đăng Xuất <img style="margin-right: 15px;" src="/static/customer/icon/5.png" alt="#" /></a>                        
                                             </li>
                                             {% else %}
                                             <li class="nav-item">
-                                                <a class="nav-link" href="{% url "customers:signin" %}" >Đăng Nhập <img style="margin-right: 15px;" src="static/customer/icon/6.png" alt="#" /></a>                        
+                                                <a class="nav-link" href="{% url "customers:signin" %}" >Đăng Nhập <img style="margin-right: 15px;" src="/static/customer/icon/6.png" alt="#" /></a>                        
                                             </li>
 
                                             <li class="nav-item">
-                                                <a class="nav-link" href="{% url "customers:signup" %}" >Đăng Kí <img style="margin-right: 15px;" src="static/customer/icon/5.png" alt="#" /></a>                        
+                                                <a class="nav-link" href="{% url "customers:signup" %}" >Đăng Kí <img style="margin-right: 15px;" src="/static/customer/icon/5.png" alt="#" /></a>                        
                                             </li>
                                             {% endif %}
                                               
                                             <li class="tytyu">
-                                                <a href="#">Giỏ hàng <img style="margin-right: 15px;" src="static/customer/icon/2.png" alt="#" /></a>
+                                                <a href="#">Giỏ hàng <img style="margin-right: 15px;" src="/static/customer/icon/2.png" alt="#" /></a>
                                             </li>
                                             <li class="menu_iconb">
-                                                <a href="#">Tìm kiếm<img style="margin-right: 15px;" src="static/customer/icon/3.png" alt="#" /></a>
+                                                <a href="#">Tìm kiếm<img style="margin-right: 15px;" src="/static/customer/icon/3.png" alt="#" /></a>
                                             </li>
 
                                             <li>
                                                 <button type="button" id="sidebarCollapse">
-                                                    <img src="static/customer/icon/menu_icon.png" alt="#" />
+                                                    <img src="/static/customer/icon/menu_icon.png" alt="#" />
                                                 </button>
                                             </li>
                                         </ul>
@@ -133,73 +132,53 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- end header inner -->
-
-                    <!-- end header -->
                     
 
                 </div>
-            </header>
-            <!-- Categories -->
-            <div class="Categories">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="title">
-                                <h2>Danh mục </h2>
-                                
-                                        <ul class="categiri">
-                                            {% if manufacturer_list %}
-                                                {% for item in manufacturer_list %}
-                                            <li>
-                                                <a href="/?manufacturers={{item.id}}" 
-                                                class="list-group-item list-group-item-action">{{item.name}}</a>
-                                            </li>
-                                            
-                                                {% endfor %}
-                                            {% endif %}
-                                        </ul>
-
-                                    
-                                        
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <!-- List product --> 
-                       
-                           <div id="brand"  class="brand-bg">
-                            <h3>Sản phẩm</h3>
-                            <div class="row">
-                                {% if products_list %}
-                                    {% for item in products_list %}
-                                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 margintop">
-                                    <div class="brand-box">
-                                        <a href="{{item.id}}" class="image">
-                                            <i><img src="media/{{ item.image }}" alt="img"></i>
-                                            <h4><span class="nolmal">{{ item.name }}</span></h4>
-                                            <h4><span class="nolmal">{{ item.price }} VNĐ</span></h4>
-                                        </a>
-    
-                                    </div>
-                                    <a class="buynow" href="#">Mua ngay</a>
-                                </div>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
-                        </div>
-        <!-- end news shoes -->
- 
-    <!-- end Categories -->
-    
-    <section>
-        <!--  save -->
-    </section>
-
-
+            </div>
+        </div>
     </div>
+    
+    <div class="row" >
+        <!-- List product --> 
+            {% if products_list %}
+            <div id="brand"  class="brand-bg">
+                <h3 style="font-size: 30px;color: red;margin-left: 50px;">{{products_list.name}}</h3>
+                <div class="row"style="margin-left: 200px;">
+                    
+                        
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 margintop">
+                        <div class="brand-box">
+                            
+                            <i><img src="/media/{{products_list.image }}" alt="img" style="max-width:500px ;"></i>
+                            
+                        </div>
+                        
+                        
+                    </div>
+                    
+                    <li style="margin-left:500px ;font-size: 15px;font-weight: bold;">Giá sản phẩm: </li>
+                    <li style="margin-left:500px ;font-size: 20px;margin-top: 10px;color: red;font-weight: bold;">{{ products_list.price}} VND</li>
+                    <tr>
+                        <li style="margin-left:500px;margin-top: 5px;font-weight: bold;">Hệ điều hành: {{ products_list.os}}</li>
+                        <li style="margin-left:500px;margin-top: 5px;font-weight: bold;">Màn hình: {{ products_list.display}}</li>
+                        <li style="margin-left:500px;margin-top: 5px;font-weight: bold;">Camera: {{ products_list.main_camera}}</li>
+                        <li style="margin-left:500px;margin-top: 5px;font-weight: bold;">Camera selfie: {{ products_list.selfie_camera}}</li>
+                        <li style="margin-left:500px;margin-top: 5px;font-weight: bold;">Chip: {{ products_list.chip}}</li>
+                        <li style="margin-left:500px;margin-top: 5px;font-weight: bold;">Ram: {{ products_list.RAM}}</li>
+                        <li style="margin-left:500px;margin-top: 5px;font-weight: bold;">Rom: {{ products_list.ROM}}</li>
+                        <li style="margin-left:500px;margin-top: 5px;font-weight: bold;">Sim: {{ products_list.sim}}</li>
+                        <li style="margin-left:500px;margin-top: 5px;font-weight: bold;">Pin: {{ products_list.battery}}</li>
+                    </tr>
+                    <a class="buynow" href="#" style="margin-left: 500px;">Thêm giỏ hàng</a>
+                    <li style="margin-top: 20px;margin-left:400px;font-size: 20px;font-weight: bold;color:red;">Mô tả:</li>
+                    <li style="font-size: 14px;font-weight: bold;color:blue;">{{ products_list.description}}</li>
+                    
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
 
     <div class="overlay"></div>
 
@@ -273,8 +252,7 @@
         }
     </script>
     <!-- google map js -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8eaHt9Dh5H57Zh0xVTqxVdBFCvFMqFjQ&callback=initMap"></script>
-    <!-- end google map js -->
+
        
 </body>
 
