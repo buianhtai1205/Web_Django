@@ -14,13 +14,13 @@
         <form action="{% url 'customers:check' %}" method="POST">
             {% csrf_token %}
             <div class="user-box">
-                {% comment %} <input type="text" name="" required=""> {% endcomment %}
-                {{ form.email }}
+                <input type="email" name="email" required="">
+                {% comment %} {{ form.email }} {% endcomment %}
                 <label>Email</label>
             </div>
             <div class="user-box">
-                {% comment %} <input type="password" name="" required=""> {% endcomment %}
-                {{ form.password }}
+                <input type="password" name="password" required="">
+                {% comment %} {{ form.password }} {% endcomment %}
                 <label>Password</label>
             </div>
             <button>
@@ -31,9 +31,9 @@
                 Submit
             </button>
         </form>
-        <div>
+        {% comment %} <div>
             <a href="">Quên mật khẩu</a>
-        </div>
+        </div> {% endcomment %}
     </div>
 </body>
 </html>

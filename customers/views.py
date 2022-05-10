@@ -72,10 +72,17 @@ def checkCustomer(request):
             content = {'messages': messages}
             return redirect('customers:signin')
     return HttpResponse("Sai method")
+    
 def product_details(request, id):
     content = {}
+    if 'username' in request.session:
+        if (request.session['username']):
+            username = request.session['username']
+            content['username'] = username
     manufacturer_list = Manufacturer.objects.all()
     products_list  = Product.objects.filter(id = id).first()
+
+    products_list.price = '{:20,d}'.format(int(products_list.price))
     
     content['products_list'] = products_list
     content['manufacturer_list'] = manufacturer_list
