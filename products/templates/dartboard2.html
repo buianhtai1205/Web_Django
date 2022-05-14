@@ -6,8 +6,23 @@
     <script type="text/javascript" src="{% static "fusioncharts/fusioncharts.js" %}"></script>
     <script type="text/javascript" src="{% static "fusioncharts/fusioncharts.charts.js" %}"></script>
     <script type="text/javascript" src="{% static "fusioncharts/themes/fusioncharts.theme.fusion.js" %}"></script>
-    </head>
-    <body>
-        <div id="myFirstchart-container">{{ output|safe }}</div>
-    </body>
+</head>
+<body>
+    <div>
+        <form action="">
+            <select name="id">
+                <option value="-1">Tất cả</option>
+                <option value="16">Xiaomi</option>
+                <option value="17">Vivo</option>
+                <option value="18">Samsung</option>
+                <option value="14">Oppo</option>
+                <option value="15">Iphone</option>
+                <option value="19">Realme</option>
+                <option value="20">Nokia</option>
+            </select>
+            <button>Thống kê</button>
+        </form>
+    </div>
+    <div style="display: block; margin: 0 auto;" id="myFirstchart-container">{{ output|safe }}</div>
+</body>
 </html>

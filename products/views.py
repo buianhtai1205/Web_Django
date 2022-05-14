@@ -37,11 +37,21 @@ def mySecondChart(request):
     }
   dataSource['data'] = []
 
-  for product in Product.objects.all():
-    myLabel = product.name.split(" ")[2] + " " + product.name.split(" ")[3]
+  id = request.GET.get('id')
+  if id == '-1':
+    products = Product.objects.all()
+  else:
+    products = Product.objects.filter(manufacturer_id_id=id)
+    dataSource['chart']['theme'] = "umber"
+
+  for product in products:
+    myLabel = product.name[11:]
     dataSource["data"].append({"label": myLabel})  
     dataSource["data"].append({"value": product.price})
 
-  column2D = FusionCharts("column2D", "mySecondChart", "1500", "700", "myFirstchart-container", "json", dataSource)
+  if id == '-1':
+    column2D = FusionCharts("column2D", "mySecondChart", "1400", "700", "myFirstchart-container", "json", dataSource)
+  else:
+    column2D = FusionCharts("column2D", "mySecondChart", "1200", "700", "myFirstchart-container", "json", dataSource)
   return render(request, 'dartboard2.html', { 'output': column2D.render(), })
 
