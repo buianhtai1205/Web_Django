@@ -3,7 +3,7 @@ from django.db import models
 
 # Create your models here.
 from uuid import uuid4
-
+from products.models import Product
 
 class Customer(models.Model):
     name = models.CharField(max_length=50)
@@ -19,4 +19,36 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
 
+
+class Order(models.Model):
+    name_receiver = models.CharField(max_length=50)
+    phone_receiver = models.CharField(max_length=15)
+    address_receiver = models.CharField(max_length=200)
+    messages = models.CharField(max_length=200)
+    status = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now=True)
+    total_price = models.IntegerField()
+    customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name="Customer")
+
+    def __unicode__(self):
+        return self.content
+
+'''
+Table Order_Product tạo trực tiếp trong databases
+Câu SQL: 
+
+CREATE TABLE `customers_order_product` (
+	`order_id` BIGINT(20) NULL DEFAULT NULL,
+	`product_id` BIGINT(20) NULL DEFAULT NULL,
+	`quantity` INT(11) NULL DEFAULT NULL,
+	INDEX `FK1` (`order_id`) USING BTREE,
+	INDEX `FK__products_product` (`product_id`) USING BTREE,
+	CONSTRAINT `FK1` FOREIGN KEY (`order_id`) REFERENCES `python_web`.`customers_order` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT,
+	CONSTRAINT `FK__products_product` FOREIGN KEY (`product_id`) REFERENCES `python_web`.`products_product` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+;
+
+'''
    
