@@ -10,6 +10,7 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.core import serializers
+from carts.forms import CartAddProductForm
 
 
 def index(request):
@@ -83,10 +84,10 @@ def product_details(request, id):
     products_list  = Product.objects.filter(id = id).first()
 
     products_list.price = '{:20,d}'.format(int(products_list.price))
-    
+    cart_product_form = CartAddProductForm()
     content['products_list'] = products_list
     content['manufacturer_list'] = manufacturer_list
+    content['cart_product_form'] = cart_product_form
     return render(request, 'customers/product_details.html',content)
-
 
             

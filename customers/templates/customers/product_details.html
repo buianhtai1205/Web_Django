@@ -170,7 +170,15 @@
                         <li style="margin-left:500px;margin-top: 5px;font-weight: bold;">Sim: {{ products_list.sim}}</li>
                         <li style="margin-left:500px;margin-top: 5px;font-weight: bold;">Pin: {{ products_list.battery}}</li>
                     </tr>
-                    <a class="buynow" href="#" style="margin-left: 500px;">Thêm giỏ hàng</a>
+                    <form method="POST" action="{% url "carts:add_to_cart" %}"style="margin-left: 500px;margin-top: 30px">
+                        {% csrf_token %}
+                        <input type="hidden" name="quantity" value="1" />
+                        <input type="hidden" name="product_id" value="{{products_list.id}}" />
+                        <button type="submit" class="btn btn-primary">
+                          <i class="fa fa-cart-plus fa-lg mr-2"></i> Thêm vào giỏ
+                        </button>
+                      </form>
+                    </form> 
                     <li style="margin-top: 20px;margin-bottom:16px;font-size: 20px;font-weight: bold;color:red;">Mô tả:</li>
                     <li style="font-size: 14px;font-weight: bold;color:blue; line-height: 1.6;">{{ products_list.description}}</li>
                     

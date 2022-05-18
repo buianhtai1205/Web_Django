@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'products',
     'customers',
     'crispy_forms',
+    'carts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -142,6 +143,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'your email'
 EMAIL_HOST_PASSWORD = 'your password'
 
+CART_SESSION_ID = 'carts'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
