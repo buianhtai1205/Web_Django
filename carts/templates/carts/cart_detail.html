@@ -1,0 +1,296 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content="project">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+    <meta name="author" content="vinayak sharma">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Cart</title>
+
+
+    <!-- bootstrap file -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- bootstrap file-->
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-- style css -->
+    <link rel="stylesheet" href="{% static 'customer/css/style.css' %}">
+    <!-- Responsive-->
+    <link rel="stylesheet" href="{% static 'customer/css/responsive.css' %}">
+    <!-- fevicon -->
+    <link rel="icon" href="images/fevicon.png" type="image/gif" />
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="{% static 'customer/css/jquery.mCustomScrollbar.min.css' %}">
+    <!-- Tweaks for older IEs-->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+
+<body class="container-fluid main-layout">
+    <div class="wrapper">
+
+        <!-- end loader -->
+        <div class="sidebar">
+            <!-- Sidebar  -->
+            <nav id="sidebar">
+
+                <div id="dismiss">
+                    <i class="fa fa-arrow-left"></i>
+                </div>
+
+                <ul class="list-unstyled components">
+
+                    <li class="active">
+                        <a  class="nav-link" href="/" >Trang chủ</a>
+                    </li>
+                    
+                    <li class="active">
+                        <a  href="/">Nhãn hiệu</a>
+                        {% if manufacturers %}
+                            {% for item in manufacturers %}
+                                <li>
+                                    <a class="list-group-item list-group-item-action"><img src="/media/{{ item.image }}" alt="img"></a>
+                                </li>       
+                            {% endfor %}
+                        {% endif %}
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+
+        <div id="content">
+            <!-- header -->
+            <header>
+                <!-- header inner -->
+                <div class="head_top">
+                    <div class="header">
+
+                        <div class="container-fluid">
+
+                            <div class="row">
+                                <div class="col-lg-3 logo_section">
+                                    <div class="full">
+                                        <div class="center-desk">
+                                            <div class="logo">
+                                                <a href="#" class="navbar-brand">3TQ Mobile</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9">
+                                    <div class="right_header_info">
+                                        <ul class="navbar-nav">
+                                            {% if username %}
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="" >{{ username }} <img style="margin-right: 15px;" src="/static/customer/icon/6.png" alt="#" /></a>                        
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{% url "customers:signout" %}" >Đăng Xuất <img style="margin-right: 15px;" src="/static/customer/icon/5.png" alt="#" /></a>                        
+                                            </li>
+                                            {% else %}
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{% url "customers:signin" %}" >Đăng Nhập <img style="margin-right: 15px;" src="/static/customer/icon/6.png" alt="#" /></a>                        
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{% url "customers:signup" %}" >Đăng Kí <img style="margin-right: 15px;" src="/static/customer/icon/5.png" alt="#" /></a>                        
+                                            </li>
+                                            {% endif %}
+                                              
+                                            <li class="tytyu">
+                                                <a href="#">Giỏ hàng <img style="margin-right: 15px;" src="/static/customer/icon/2.png" alt="#" /></a>
+                                            </li>
+                                            <li class="menu_iconb">
+                                                <a href="#">Tìm kiếm<img style="margin-right: 15px;" src="/static/customer/icon/3.png" alt="#" /></a>
+                                            </li>
+
+                                            <li>
+                                                <button type="button" id="sidebarCollapse">
+                                                    <img src="/static/customer/icon/menu_icon.png" alt="#" />
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <h1 class="display-4 mt-4 text-center">Giỏ hàng</h1>
+<hr />
+{% if total %}
+<div class="row justify-content-center">
+  <div class="col-auto">
+    <table class="table table-borderless table-striped table-responsive">
+      <thead class="thead-dark">
+        <tr>
+          <th>Tên</th>
+          <th>Đơn Giá</th>
+          <th>Số lượng</th>
+          <th>Xóa</th>
+          <th>Tổng tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in cart_items %}
+        <tr>
+          <td>
+            <a href="{{i.product.get_absolute_url}}"> {{i.product.name}} </a>
+          </td>
+          <td>{{i.product.price}}VNĐ</td>
+          <td>
+            <form
+              action="{% url 'carts:add_to_cart' %}"
+              class="form-inline"
+              method="POST"
+            >
+              {% csrf_token %}
+              {{i.form.product_id}}
+              <div class="input-group">
+                {{i.form.quantity}}
+                <div class="input-group-append">
+                  <button class="btn btn-primary btn-sm" type="submit">
+                    <i class="fa fa-shopping-cart mr-1"></i> Chỉnh sửa
+                  </button>
+                </div>
+              </div>
+            </form>
+          </td>
+          <td>
+            <a
+              href="{% url 'carts:remove' i.product.id %}"
+              class="btn btn-danger btn-sm"
+            >
+              <i class="fa fa-times mr-1"></i> Xóa
+            </a>
+          </td>
+          <td>{{i.total}}VNĐ</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot class="table-secondary">
+        <tr>
+          <td colspan="3"></td>
+          <td>Tổng tiền -</td>
+          <td><b>{{total}}VNĐ</b></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+<div class="text-center">
+  <a href="{% url 'carts:clear' %}" class="btn btn-warning">Làm sạch giỏ</a>
+  
+</div>
+{% else %}
+<div class="text-center">
+  <h3 class="font-weight-light">Giỏ hàng trống</h3>
+  <a href="{% url 'customers:index' %}" class="btn btn-secondary">
+    Trở lại cửa hàng
+  </a>
+</div>
+
+{% endif %}
+<div class="text-center">
+  <a href="{% url 'carts:check-out' %}" class="btn btn-secondary" style="margin-left: 650px;">Thanh toán</a>
+</div>
+    <!-- Javascript files-->
+    <script src="{% static 'customer/js/jquery.min.js' %}"></script>
+    <script src="{% static 'customer/js/popper.min.js' %}"></script>
+    <script src="{% static 'customer/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'customer/js/jquery-3.0.0.min.js' %}"></script>
+
+    <!-- sidebar -->
+    <script src="{% static 'customer/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+    <script src="{% static 'customer/js/custom.js' %}"></script>
+    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#sidebar").mCustomScrollbar({
+                theme: "minimal"
+            });
+
+            $('#dismiss, .overlay').on('click', function() {
+                $('#sidebar').removeClass('active');
+                $('.overlay').removeClass('active');
+            });
+
+            $('#sidebarCollapse').on('click', function() {
+                $('#sidebar').addClass('active');
+                $('.overlay').addClass('active');
+                $('.collapse.in').toggleClass('in');
+                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+
+            $(".zoom").hover(function() {
+
+                $(this).addClass('transition');
+            }, function() {
+
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
+    <script>
+        // This example adds a marker to indicate the position of Bondi Beach in Sydney,
+        // Australia.
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 11,
+                center: {
+                    lat: 40.645037,
+                    lng: -73.880224
+                },
+            });
+
+            var image = 'images/maps-and-flags.png';
+            var beachMarker = new google.maps.Marker({
+                position: {
+                    lat: 40.645037,
+                    lng: -73.880224
+                },
+                map: map,
+                icon: image
+            });
+        }
+        
+        let inputs = document.querySelectorAll("input.form-control");
+        inputs.forEach((i) => i.classList.add("form-control-sm"));
+
+    </script>
+    <!-- google map js -->
+
+       
+</body>
+
+</html>
