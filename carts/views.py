@@ -69,7 +69,7 @@ def CheckOut(request):
     order = Order(  name_receiver = customer.name,               
                     phone_receiver = customer.phone,
                     address_receiver = customer.address,
-                    messages = 'giao chua',
+                    messages = 'giao sớm',
                     total_price = total_prices,
                     customer_id_id = customer.id
             )
@@ -77,14 +77,14 @@ def CheckOut(request):
     orders = Order.objects.filter(name_receiver = customer.name)[0]
     quantity_id = None
     
-    products = Product.objects.filter(pk__in=cart.cart.keys())[0]
-    
-    quantity_id = cart.cart[str(products.id)]['quantity']
-    order_product = OrderProduct(order_id = orders.id,
-                    product_id = products.id,
-                    quantity = quantity_id
+    products = Product.objects.filter(pk__in=cart.cart.keys())
+    for product in products:
+        quantity_id = cart.cart[str(product.id)]['quantity']
+        order_product = OrderProduct(order_id = orders.id,
+                        product_name = product.name,
+                        quantity = quantity_id
 
-    )
-    order_product.save()
+        )
+        order_product.save()
     cart.clear()
     return redirect('carts:cart_details')
