@@ -32,24 +32,9 @@ class Order(models.Model):
 
     def __unicode__(self):
         return self.content
-
-'''
-Table Order_Product tạo trực tiếp trong databases
-Câu SQL: 
-
-CREATE TABLE `customers_orderproduct` (
-	`order_id` BIGINT(20) NULL DEFAULT NULL,
-	`product_id` BIGINT(20) NULL DEFAULT NULL,
-	`quantity` INT(11) NULL DEFAULT NULL,
-	INDEX `FK_customers_orderproduct_customers_order` (`order_id`) USING BTREE,
-	INDEX `FK_customers_orderproduct_products_product` (`product_id`) USING BTREE,
-	CONSTRAINT `FK_customers_orderproduct_customers_order` FOREIGN KEY (`order_id`) REFERENCES `python_web`.`customers_order` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT,
-	CONSTRAINT `FK_customers_orderproduct_products_product` FOREIGN KEY (`product_id`) REFERENCES `python_web`.`products_product` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
-)
-COLLATE='utf8mb4_general_ci'
-ENGINE=InnoDB
-;
-
-
-'''
-   
+    def PlaceOrder(self):
+        self.save()
+class OrderProduct(models.Model):
+    order_id = models.IntegerField()
+    product_name = models.CharField(max_length=50)
+    quantity = models.IntegerField() 
