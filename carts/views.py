@@ -74,7 +74,7 @@ def CheckOut(request):
                     customer_id_id = customer.id
             )
     order.PlaceOrder()
-    orders = Order.objects.filter(name_receiver = customer.name)[0]
+    orders = Order.objects.filter(name_receiver = customer.name).last()
     quantity_id = None
     
     products = Product.objects.filter(pk__in=cart.cart.keys())
