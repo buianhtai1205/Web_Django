@@ -90,7 +90,14 @@ def myFourthChart(request):
     }
   dataSource['data'] = []
 
-  listData = Order.objects.raw("SELECT 1 AS id, name_receiver AS name, SUM(total_price) AS sum FROM customers_order GROUP BY name_receiver ORDER BY sum DESC LIMIT 10")
+  month = request.GET.get('month')
+  if month == '0':
+    sql = "SELECT 1 AS id, name_receiver AS name, SUM(total_price) AS sum FROM customers_order GROUP BY name_receiver ORDER BY sum DESC LIMIT 10"
+  else:
+    dataSource['chart']['caption'] = "Top 10 Customers " + str(month) + "/2022"
+    sql = "SELECT 1 AS id, name_receiver AS name, SUM(total_price) AS sum FROM customers_order where MONTH(created_at) = " + str(month) + " GROUP BY name_receiver ORDER BY sum DESC LIMIT 10"
+
+  listData = Order.objects.raw(sql)
 
   for data in listData:
     dataSource["data"].append({"label": data.name})  
@@ -111,7 +118,14 @@ def myFifthChart(request):
     }
   dataSource['data'] = []
 
-  listData = Order.objects.raw("SELECT 1 AS id, product_name AS name, sum(quantity) AS sum FROM customers_orderproduct GROUP BY product_name ORDER BY SUM DESC LIMIT 10")
+  month = request.GET.get('month')
+  if month == '0':
+    sql = "SELECT 1 AS id, product_name AS name, sum(quantity) AS sum FROM customers_orderproduct GROUP BY product_name ORDER BY SUM DESC LIMIT 10"
+  else:
+    dataSource['chart']['caption'] = "Top 10 Products " + str(month) + "/2022"
+    sql = "SELECT 1 AS id, product_name AS name, created_at, sum(quantity) AS sum FROM customers_orderproduct JOIN customers_order ON customers_orderproduct.order_id = customers_order.id WHERE MONTH(created_at) = " + str(month) + " GROUP BY product_name, created_at ORDER BY SUM DESC LIMIT 10"
+
+  listData = Order.objects.raw(sql)
 
   for data in listData:
     name = data.name[11:]

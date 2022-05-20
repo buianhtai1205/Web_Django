@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- bootstrap file -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- bootstrap file-->
     <title>FC-python wrapper</title>
     {% load static %}
     <script type="text/javascript" src="{% static "fusioncharts/fusioncharts.js" %}"></script>
@@ -8,6 +13,9 @@
     <script type="text/javascript" src="{% static "fusioncharts/themes/fusioncharts.theme.fusion.js" %}"></script>
     </head>
     <body>
+        <a href="http://127.0.0.1:8000/admin/" class="btn btn-success" style="font-weight: bold; float: right;">
+            <i class="fa fa-sign-in fa-lg mr-2"></i> Admin Site
+        </a>
         <div id="myFirstchart-container">{{ output|safe }}</div>
     </body>
 </html>
