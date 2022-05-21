@@ -16,6 +16,13 @@
         <a href="http://127.0.0.1:8000/admin/" class="btn btn-success" style="font-weight: bold; float: right;">
             <i class="fa fa-sign-in fa-lg mr-2"></i> Admin Site
         </a>
+        <form action="">
+            <select class="form-control selcls" name="flag" id="" style="width: 150px;">
+                <option value="0">Tất cả</option>
+                <option value="1">Đã bán</option>
+            </select>
+            <button class="btn btn-success">Thống kê</button>
+        </form>
         <div id="myFirstchart-container">{{ output|safe }}</div>
     </body>
 </html>

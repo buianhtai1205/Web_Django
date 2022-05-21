@@ -3,7 +3,6 @@ from django.shortcuts import render
 from products.models import Product 
 from manufacturers.models import Manufacturer 
 from customers.models import Order
-from django.db.models import Count
 
 from .fusioncharts import FusionCharts
 
@@ -17,11 +16,24 @@ def myFirstChart(request):
       "theme": "fusion"
   }
   plantdataSource['data'] = []
-  for item in Manufacturer.objects.raw('SELECT manufacturers_manufacturer.id, manufacturers_manufacturer.name, COUNT(manufacturers_manufacturer.name) AS num_products FROM manufacturers_manufacturer JOIN products_product ON manufacturers_manufacturer.id = products_product.manufacturer_id_id GROUP BY manufacturers_manufacturer.id, manufacturers_manufacturer.name'):
-    data = {}
-    data['label'] = item.name
-    data['value'] = item.num_products
-    plantdataSource['data'].append(data)
+
+  flag = request.GET.get('flag')
+  if flag == '0':
+    sql = "SELECT manufacturers_manufacturer.id, manufacturers_manufacturer.name, COUNT(manufacturers_manufacturer.name) AS num_products FROM manufacturers_manufacturer JOIN products_product ON manufacturers_manufacturer.id = products_product.manufacturer_id_id GROUP BY manufacturers_manufacturer.id, manufacturers_manufacturer.name"
+    for item in Manufacturer.objects.raw(sql):
+      data = {}
+      data['label'] = item.name
+      data['value'] = item.num_products
+      plantdataSource['data'].append(data)
+  else:
+    sql = "SELECT 1 as id, manufacturers_manufacturer.name as nameMNF, SUM(quantity) AS sum FROM customers_orderproduct JOIN products_product ON customers_orderproduct.product_name = products_product.name JOIN manufacturers_manufacturer ON manufacturers_manufacturer.id = products_product.manufacturer_id_id GROUP BY manufacturers_manufacturer.name ORDER BY SUM desc"
+    for item in Order.objects.raw(sql):
+      data = {}
+      data['label'] = item.nameMNF
+      data['value'] = int(item.sum)
+      plantdataSource['data'].append(data)
+    plantdataSource['chart']['caption'] = "Product Count Sell 2022"
+    
   plantchart = FusionCharts("pie3D", "myFirstChart" , "1500", "700", "myFirstchart-container", "json", plantdataSource)
   return render(request, 'dartboard1.html', {'output': plantchart.render()})
 
@@ -56,6 +68,7 @@ def mySecondChart(request):
     column2D = FusionCharts("column2D", "mySecondChart", "1200", "700", "myFirstchart-container", "json", dataSource)
   return render(request, 'dartboard2.html', { 'output': column2D.render(), })
 
+
 def myThirdChart(request):
   dataSource = {}
   dataSource['chart'] = {
@@ -77,6 +90,7 @@ def myThirdChart(request):
 
   column2D = FusionCharts("column2D", "myThirdChart", "1000", "700", "myFirstchart-container", "json", dataSource)
   return render(request, 'dartboard3.html', { 'output': column2D.render(), })
+
 
 def myFourthChart(request):
   dataSource = {}
@@ -105,6 +119,7 @@ def myFourthChart(request):
 
   column2D = FusionCharts("column2D", "myFourthChart", "1300", "700", "myFirstchart-container", "json", dataSource)
   return render(request, 'dartboard4.html', { 'output': column2D.render(), })
+
 
 def myFifthChart(request):
   dataSource = {}
